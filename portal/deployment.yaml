@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal
+  namespace: flyte
+  labels:
+    app: portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal
+  template:
+    metadata:
+      labels:
+        app: portal
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::173840052742:role/modelbuilderagentbatchworker-staging
+    spec:
+      containers:
+      - name: portal
+        image: docker.io/lyft/flyte:portal
+        command:
+          - sleep
+          - infinity
