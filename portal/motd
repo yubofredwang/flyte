@@ -12,7 +12,6 @@
 *   $ psql -h <host> -U flyteadmin -d flyteadmin               *
 *                                                              *
 * To activate the virtual environment with flytekit:           *
-*   $ source /root/venv/bin/activate to activate virtualenv    *
-*                                                              *
+*   $ source /root/venv/bin/activate                           *
 *                                                              *
 ****************************************************************
