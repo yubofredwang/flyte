@@ -25,4 +25,24 @@ RUN wget http://download.redis.io/redis-stable.tar.gz \
 
 RUN apt-get install -y postgresql-client
 
+
+# Virtual environment
+RUN python3.6 -m venv ${VENV}
+RUN ${VENV}/bin/pip install wheel
+
+# Install Python dependencies
+# Been having problems with other versions of pip reading from gemfury
+RUN ${VENV}/bin/pip install pip==19.0.3
+RUN ${VENV}/bin/pip install flytekit
+RUN ${VENV}/bin/pip install ipython
+
+# This is a script that enables a virtualenv, copy it to a better location
+RUN cp ${VENV}/bin/flytekit_venv /opt/
+RUN chmod a+x /opt/flytekit_venv
+
+COPY .bash_aliases /root/
+COPY .bashrc /root
+COPY motd /root
+
+
 WORKDIR /root
