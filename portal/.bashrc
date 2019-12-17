@@ -83,7 +83,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/motd ]; then
-    cat ~/motd
+if [ -f /etc/motd ]; then
+    cat /etc/motd
 fi
 

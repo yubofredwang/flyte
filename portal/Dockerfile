@@ -42,7 +42,7 @@ RUN chmod a+x /opt/flytekit_venv
 
 COPY .bash_aliases /root/
 COPY .bashrc /root
-COPY motd /root
-
+COPY motd /etc
+RUN chmod a+r /etc/motd
 
 WORKDIR /root
