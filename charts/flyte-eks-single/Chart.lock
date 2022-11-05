@@ -1,6 +1,6 @@
 dependencies:
-- name: flyte-binary
-  repository: file://../flyte-binary
+- name: flyte-common
+  repository: file://../flyte-common
   version: 0.1.0
-digest: sha256:b9283bff7dd4eb6f5626803a6cf39cac15ae841c30b5b61cf284be57d490f85b
-generated: "2022-10-10T18:05:52.717699-07:00"
+digest: sha256:f490af66894abf6883c4999a2a27f5300c041ba6e176a1dee4616451df485f42
+generated: "2022-11-04T15:30:40.911251-07:00"

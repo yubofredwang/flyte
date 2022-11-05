@@ -1,0 +1,1 @@
+{{- template "flyte-common.deployment.flytebinary" }}

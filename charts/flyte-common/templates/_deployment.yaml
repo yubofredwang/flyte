@@ -1,10 +1,9 @@
----
-# Source: flyte-eks-single/templates/deployment.yaml
+{{- define "flyte-common.deployment.flytebinary" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    aa:fdsajfdksl
+    aa: {{- .Chart.Name | trunc 63 }}
     app: flyte
   name: flytebinary
 spec:
@@ -19,9 +18,12 @@ spec:
       labels:
         app: flyte
     spec:
+      {{- if .Values.networking.host }}
+      hostNetwork: true
+      {{- end }}
       containers:
       - name: flyte
-        image: ""
+        image: "{{ .Values.image.fqn }}"
         imagePullPolicy: IfNotPresent
         args:
         - start
@@ -50,18 +52,37 @@ spec:
         volumeMounts:
         - mountPath: /etc/flyte/cluster-resource-templates
           name: cluster-resource-templates
+        {{- if eq .Values.paths.externalFlyteConfig "" }}
+        - mountPath: /etc/flyte/flyte.yaml
+          subPath: flyte.yaml
+          name: config
+        {{- else }}
         - mountPath: /etc/flyte/flyte.yaml
           name: config
+        {{- end }}
         - mountPath: /var/run/flyte
           name: state
+        {{- if .Values.database.password }}
+        {{- include "flyte-binary.database.secretvolmount" . | nindent 8 }}
+        {{- end }}
       serviceAccountName: flyte
       volumes:
       - name: cluster-resource-templates
         configMap:
           name: cluster-resource-templates
+      {{- if eq .Values.paths.externalFlyteConfig "" }}
+      - name: config
+        configMap:
+          name: flyte-backend-config
+      {{- else }}
       - hostPath:
-          path: 
+          path: {{ .Values.paths.externalFlyteConfig }}
           type: File
         name: config
+      {{- end }}
       - name: state
         emptyDir: {}
+      {{- if .Values.database.password }}
+      {{- include "flyte-binary.database.secretvol" . | nindent 6 }}
+      {{- end }}
+{{- end }}
